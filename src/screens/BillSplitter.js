@@ -14,7 +14,13 @@ const BillSplitter = ({ navigation }) => {
     const inputRef = useRef(null);
 
     const addContributor = () => {
-        setContributors([contributor, ...contributors]);
+
+        const contributorAux = {
+            ...contributor,
+            amount: parseFloat(contributor.amount).toFixed(2)
+        }
+
+        setContributors([contributorAux, ...contributors]);
         setContributor(contributorDefault);
         inputRef.current.focus();
     };
@@ -25,11 +31,25 @@ const BillSplitter = ({ navigation }) => {
         inputRef.current.focus();
     };
 
+    const addName = (value) => {
+        const regex = /^[a-zA-Z ]+$/;
+        const textIsValid = regex.test(value)
+        if(textIsValid || value.length === 0){
+            setContributor({ ...contributor, name: value })
+        }
+    }
+
+    const addAmount = (value) => {
+        if(!isNaN(value)){
+            setContributor({ ...contributor, amount: value })
+        }
+    }
+
     const calculate = () => {
-        const eachMustPay = totalAmount / contributors.length;
+        const eachMustPay = parseFloat(totalAmount / contributors.length).toFixed(2);
         const debts = contributors.map((con) => ({
             name: con.name,
-            debt: con.amount - eachMustPay,
+            debt: parseFloat(con.amount).toFixed(2) - eachMustPay,
         }));
         const payers = debts.filter((debt) => debt.debt < 0);
         const receivers = debts.filter((debt) => debt.debt > 0);
@@ -43,7 +63,7 @@ const BillSplitter = ({ navigation }) => {
         contributors.forEach((cont) => {
             total += Number(cont.amount);
         });
-        setTotalAmount(total);
+        setTotalAmount(total.toFixed(2));
     }, [contributors.length]);
 
     return (
@@ -54,7 +74,7 @@ const BillSplitter = ({ navigation }) => {
                         reff={inputRef}
                         value={contributor.name}
                         placeholder={"Nombre"}
-                        onChangeText={(value) => setContributor({ ...contributor, name: value })}
+                        onChangeText={addName}
                     />
 
                     <Input
@@ -62,16 +82,16 @@ const BillSplitter = ({ navigation }) => {
                         keyboardType='numeric'
                         value={contributor.amount}
                         placeholder={"Monto"}
-                        onChangeText={(value) => setContributor({ ...contributor, amount: value })}
+                        onChangeText={addAmount}
                     />
                 </View>
                 <ScrollView style={{ flex: 1 }}>
                     {contributors.map((cont, i) => {
                         return (
                             <View key={i} style={styles.contributorInfo}>
-                                <Text fontSize={"bg"} value={cont.name} />
+                                <Text fontSize={"md"} value={cont.name} />
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Text fontSize={"bg"} value={"$" + cont.amount} />
+                                    <Text fontSize={"md"} value={"$" + cont.amount} />
                                     <IconButton
                                         onPress={() => removeContributor(cont)}
                                         style={{ marginLeft: 8 }}
@@ -85,8 +105,8 @@ const BillSplitter = ({ navigation }) => {
                     })}
                 </ScrollView>
                 <View style={{ ...styles.contributorInfo, marginBottom: 0 }}>
-                    <Text fontSize={"bg"} value={"Total: "} />
-                    <Text fontSize={"bg"} value={"$" + totalAmount} />
+                    <Text fontSize={"md"} value={"Total: "} />
+                    <Text fontSize={"md"} value={"$" + totalAmount} />
                 </View>
 
                 <View style={{ width: "100%" }}>

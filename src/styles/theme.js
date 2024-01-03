@@ -8,9 +8,9 @@ const darkPalette = {
 	primary: "#9933ff", 
 	secondary: "#3399ff", 
 	tertiary: "#ffff00", 
-	primaryText: "#FFFFFF", 	
+	primaryText: "black", 	
 	// background: "#000080", 
-	background: 'black',
+	background: '#01ffff',
 	link: "#2196F3", 
 	white: "#FFFFFF", 	
 	grey: "#BFBFBF", 
@@ -24,6 +24,10 @@ const darkPalette = {
 	text: "#000000", 
 	icon: "#3399ff", 
 };
+
+const fontFamilys = {
+	primary: 'PressStart'
+}
 
 const fontSizes = Platform.select({
 	android: {
@@ -48,10 +52,11 @@ const fontSizes = Platform.select({
 
 export const theme = {
 	colors: darkPalette,
+	fontFamilys,
 	fontSizes,
 };
 
 export const statusTheme = {
 	barBackground: theme.colors.background,
-	barStyle: "light-content",
+	barStyle: "dark-content",
 };

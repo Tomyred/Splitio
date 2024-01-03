@@ -5,16 +5,17 @@ import AppNavigation from "./src/navigation/AppNavigator";
 import { statusTheme } from "./src/styles/theme";
 import { useFonts } from 'expo-font';
 // import * as SplashScreen from 'expo-splash-screen';
+import PressStart from './assets/fonts/PressStart2P-Regular.ttf'
 
 export default function App() {
 
-    // const [fontsLoaded] = useFonts({
-    //     'PressStart': require('./fonts/calibri-bold.ttf'),
-    // });    
+    const [fontsLoaded] = useFonts({
+        'PressStart': PressStart,
+    });    
 
-    // if (!fontsLoaded) {
-    // return null;
-    // }
+    if (!fontsLoaded) {
+    return null;
+    }
     
 
     return (

@@ -10,39 +10,39 @@ const Input = props => {
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingVertical:5,
-            
             marginBottom: 10,
             height: 90,
             width: '100%'
         },
-        whiteLine: {
-            backgroundColor: 'white',
+        verticalLine: {
+            backgroundColor: 'black',
             width: 5,
             height: '85%',
         },
-        verticalLines: {
+        horizontalLines: {
             borderTopWidth: 5,
             borderBottomWidth: 5,
-            borderColor: 'white',
+            borderColor: 'black',
             height: '100%',
             width: '100%',
-            backgroundColor: 'black',
+            backgroundColor: 'white',
             flex: 1,
             flexDirection: 'row'
           },
         inputStyle: {
-            color: 'white',
+            color: '#212529',
             flex: 1,
+            fontFamily: 'PressStart',
             height: "100%",
-            fontSize: 30,
+            fontSize: 20,
             paddingHorizontal: 10
         }
     });
 
     return (
         <View style={styles.container} pointerEvents={props.pointerEvents}>
-            <View style={styles.whiteLine} />
-            <View style={styles.verticalLines} >
+            <View style={styles.verticalLine} />
+            <View style={styles.horizontalLines} >
                 <TextInput
                     ref={reff}
                     {...props}
@@ -51,7 +51,7 @@ const Input = props => {
                     placeholder={placeholder}
                 />
             </View>
-            <View style={styles.whiteLine} />
+            <View style={styles.verticalLine} />
         </View>
     );
 };

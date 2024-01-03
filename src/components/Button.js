@@ -7,9 +7,9 @@ const Button = ({ disabled, type, fontSize, title, onPress }) => {
 
   const getColors = () => {
 
-    if(disabled){
-      return {background: '#d3d3d3', shadow: '#adafbc' }
-    }
+    // if(disabled){
+    //   return {background: '#d3d3d3', shadow: '#adafbc' }
+    // }
 
     switch (type) {
       case 'success':
@@ -33,14 +33,14 @@ const Button = ({ disabled, type, fontSize, title, onPress }) => {
       
     },
     blackLine: {
-      backgroundColor: 'black',
+      backgroundColor: '#212529',
       width: 5,
       height: '85%',
     },
-    verticalLines: {
+    shadowLines: {
       borderTopWidth: 5,
       borderBottomWidth: 5,
-      borderColor: 'black',
+      borderColor: '#212529',
       height: '100%',
       width: '100%',
       flex: 1,
@@ -51,28 +51,39 @@ const Button = ({ disabled, type, fontSize, title, onPress }) => {
       display: 'flex',
       height: '100%',
       alignItems: 'center',
-      flex: 1
+      flex: 1,
+      justifyContent: 'flex-end'
     },
     innerBottomShadowLine: {
       backgroundColor: getColors().shadow,
-      height: 5,
+      height: 8,
       width: '100%',
       alignSelf: 'flex-end'
     },
     innerLeftShadowLine: {
       backgroundColor: getColors().shadow,
-      width: 5,
+      width: 8,
       height: '100%',
-      // alignSelf: 'flex-end'
+    },
+    text: {
+      color: 'black', 
+      width: '100%',
+      height: '100%',
+      textAlignVertical: 'center', 
+      textAlign: 'center',
+      fontSize:12, 
+      fontFamily: 'PressStart', 
+      position: 'absolute', 
     }
   }
 
   return (
     <TouchableOpacity disabled={disabled} style={styles.container} onPress={onPress} >
       <View style={styles.blackLine} />
-      <View style={styles.verticalLines} >
+      <View style={styles.shadowLines} >
+      <Text style={styles.text} >{title}</Text>
+
         <View style={styles.textContainer}>
-          <Text style={{color: 'white', flex: 1, textAlignVertical: 'center', fontSize:20 }} >{title}</Text>
           <View style={styles.innerBottomShadowLine} />
         </View>
         <View style={styles.innerLeftShadowLine} />

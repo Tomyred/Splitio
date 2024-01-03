@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "BillSplitter",
-    "slug": "BillSplitter",
+    "name": "SplitHub",
+    "slug": "SplitHub",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.troj.SplitHub"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "80111c01-749a-4539-821f-91a0e3f4f789"
+      }
     }
   }
 }
