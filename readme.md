@@ -1,1 +1,1 @@
-a stupid app to divide expenses
+a shitty app to divide expenses
