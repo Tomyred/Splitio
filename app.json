@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "SplitHub",
-    "slug": "SplitHub",
+    "name": "Splitio",
+    "slug": "splitio",
+    "schema": "splitio",
+    "owner": "Torj",  
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,14 +17,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.troj.SplitHub"
+      "package": "com.troj.splitio"
     },
     "web": {
       "favicon": "./assets/favicon.png"

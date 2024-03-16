@@ -6,7 +6,7 @@ import { theme } from "../styles/theme";
 import { useState } from "react";
 import Button from "../components/Button";
 
-const Balance = ({ navigation, route }) => {
+const Balance = ({ route }) => {
     const { receivers, payers, notPaynotReceive, eachMustPay } = route.params;
     const [balance, setBalance] = useState([]);
 
