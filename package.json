@@ -6,16 +6,21 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "patch-package",
+    "debug-apk": "eas build -p android --profile development",
+    "apk": "eas build -p android --profile preview"
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
     "@rneui/themed": "^4.0.0-rc.8",
     "expo": "~49.0.15",
+    "expo-dev-client": "^3.3.10",
     "expo-font": "~11.4.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "patch-package": "^8.0.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-elements": "^3.4.3",

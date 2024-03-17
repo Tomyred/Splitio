@@ -3,7 +3,7 @@
     "name": "Splitio",
     "slug": "splitio",
     "schema": "splitio",
-    "owner": "Torj",  
+    "owner": "troj",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,7 +31,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "80111c01-749a-4539-821f-91a0e3f4f789"
+        "projectId": "29b110e2-c8ac-4945-b5ae-6fa3269a095f"
       }
     }
   }
