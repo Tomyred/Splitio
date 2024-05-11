@@ -71,7 +71,7 @@ const Balance = ({ route }) => {
                                 <View key={i} style={{marginBottom: 10}}>
                                     <Text textStyle='white' fontSize='md' value={`${payer.name} debe`} />
                                     {payer.payments.map((pay, j) => {
-                                        return <Text textStyle='white' key={j} value={`$${pay.amount.toFixed(2)} a ${pay.to}`} />;
+                                        return <Text textStyle='white' key={j} value={`- $${pay.amount.toFixed(2)} a ${pay.to}`} />;
                                     })}
                                 </View>
                             );
