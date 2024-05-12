@@ -10,7 +10,8 @@ const darkPalette = {
 	tertiary: "#ffff00", 
 	primaryText: "black", 	
 	// background: "#000080", 
-	background: '#01ffff',
+	// background: '#01ffff',
+	background: '#212529',
 	link: "#2196F3", 
 	white: "#FFFFFF", 	
 	grey: "#BFBFBF", 
@@ -58,5 +59,5 @@ export const theme = {
 
 export const statusTheme = {
 	barBackground: theme.colors.background,
-	barStyle: "dark-content",
+	barStyle: "light-content",
 };

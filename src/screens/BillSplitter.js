@@ -18,7 +18,7 @@ const BillSplitter = ({ navigation }) => {
         const contributorAux = {
             ...contributor,
             amount: parseFloat(contributor.amount).toFixed(2)
-        }
+        }        
 
         setContributors([contributorAux, ...contributors]);
         setContributor(contributorDefault);
@@ -55,7 +55,7 @@ const BillSplitter = ({ navigation }) => {
         const receivers = debts.filter((debt) => debt.debt > 0);
         const notPaynotReceive = debts.filter((debt) => debt === 0);
 
-        navigation.navigate("Balance", { eachMustPay, receivers, payers, notPaynotReceive });
+        navigation.navigate("Balance", { eachMustPay, receivers, payers, totalAmount });
     };
 
     useEffect(() => {
@@ -85,28 +85,32 @@ const BillSplitter = ({ navigation }) => {
                         onChangeText={addAmount}
                     />
                 </View>
-                <ScrollView style={{ flex: 1 }}>
-                    {contributors.map((cont, i) => {
-                        return (
-                            <View key={i} style={styles.contributorInfo}>
-                                <Text fontSize={"md"} value={cont.name} />
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Text fontSize={"md"} value={"$" + cont.amount} />
-                                    <IconButton
-                                        onPress={() => removeContributor(cont)}
-                                        style={{ marginLeft: 8 }}
-                                        iconName='trash'
-                                        color='error'
-                                        fontSize='bg'
-                                    />
+                <View style={styles.contributorInfoContainer}>
+                    <View style={styles.whiteLine} />
+                    <ScrollView style={styles.contributorInfoScroll}>
+                        {contributors.map((cont, i) => {
+                            return (
+                                <View key={i} style={styles.contributorInfo}>
+                                    <Text textStyle={'white'} fontSize={"md"} value={cont.name} />
+                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <Text textStyle={'white'} fontSize={"md"} value={"$" + cont.amount} />
+                                        <IconButton
+                                            onPress={() => removeContributor(cont)}
+                                            style={{ marginLeft: 8 }}
+                                            iconName='trash'
+                                            color='error'
+                                            fontSize='bg'
+                                        />
+                                    </View>
                                 </View>
-                            </View>
-                        );
-                    })}
-                </ScrollView>
-                <View style={{ ...styles.contributorInfo, marginBottom: 0 }}>
-                    <Text fontSize={"md"} value={"Total: "} />
-                    <Text fontSize={"md"} value={"$" + totalAmount} />
+                            );
+                        })}
+                    </ScrollView>
+                    <View style={styles.whiteLine} />
+                </View>
+                <View style={{ ...styles.contributorInfo, marginTop:25}}>
+                    <Text textStyle={'white'} fontSize={"md"} value={"Total: "} />
+                    <Text textStyle={'white'} fontSize={"md"} value={"$" + totalAmount} />
                 </View>
 
                 <View style={{ width: "100%" }}>
@@ -129,7 +133,7 @@ const BillSplitter = ({ navigation }) => {
                             />
                         </View>
                     </View>
-                    <View style={{ marginTop: 20 }}>
+                    <View style={{ marginTop: 15 }}>
                         <View style={{ width: "100%", alignSelf: "center" }}>
                             <Button
                                 onPress={calculate}
@@ -149,16 +153,36 @@ const BillSplitter = ({ navigation }) => {
 export default BillSplitter;
 
 const styles = StyleSheet.create({
+    contributorInfoContainer: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center'
+        
+    },
+    contributorInfoScroll: {
+        backgroundColor: '#000000',
+        backgroundColor: theme.colors.black,
+        borderTopWidth: 5,
+        borderBottomWidth: 5,
+        borderColor: 'white',
+        height: '100%',
+        width: '100%',
+        paddingVertical: 15
+    },
     buttonContainer: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginTop: 20,
     },
     contributorInfo: {
         paddingHorizontal: 10,
         flexDirection: "row",
         justifyContent: "space-between",
         marginBottom: 10,
+    },
+    whiteLine: {
+        backgroundColor: 'white',
+        width: 5,
+        height: '97%',
     },
 });

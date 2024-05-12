@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
+import { theme } from "../styles/theme";
 
 const Input = props => {
     const { placeholder, reff } = props;
@@ -15,22 +16,22 @@ const Input = props => {
             width: '100%'
         },
         verticalLine: {
-            backgroundColor: 'black',
+            backgroundColor: '#FFFF',
             width: 5,
             height: '85%',
         },
         horizontalLines: {
             borderTopWidth: 5,
             borderBottomWidth: 5,
-            borderColor: 'black',
+            borderColor: '#FFFF',
             height: '100%',
             width: '100%',
-            backgroundColor: 'white',
+            backgroundColor: 'black',
             flex: 1,
             flexDirection: 'row'
           },
         inputStyle: {
-            color: '#212529',
+            color: 'white',
             flex: 1,
             fontFamily: 'PressStart',
             height: "100%",
@@ -44,6 +45,8 @@ const Input = props => {
             <View style={styles.verticalLine} />
             <View style={styles.horizontalLines} >
                 <TextInput
+                    maxLength={15}
+                    placeholderTextColor={theme.colors.grey} 
                     ref={reff}
                     {...props}
                     maxFontSizeMultiplier={1.2}

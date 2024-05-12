@@ -7,7 +7,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 
 const Balance = ({ route }) => {
-    const { receivers, payers, notPaynotReceive, eachMustPay } = route.params;
+    const { receivers, payers, totalAmount, eachMustPay } = route.params;
     const [balance, setBalance] = useState([]);
 
     const calculate = () => {
@@ -38,7 +38,7 @@ const Balance = ({ route }) => {
 
     const onShare = () => {
 
-        let text = `Cada uno debe pagar $${eachMustPay}.\nCuentas pendientes: \n`
+        let text = `El total fue: $${totalAmount} \nCada uno debe pagar $${eachMustPay}.\nCuentas pendientes: \n`
 
         balance.forEach( payer => {
             text += `${payer.name} debe: \n`
