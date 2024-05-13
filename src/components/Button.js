@@ -1,9 +1,8 @@
-import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native';
 import React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const Button = ({ disabled, type, fontSize, title, onPress }) => {
+const Button = ({ disabled, type, title, onPress }) => {
     const getColors = () => {
         // if(disabled){
         //   return {background: '#d3d3d3', shadow: '#adafbc' }

@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput } from "react-native";
 import { theme } from "../styles/theme";
 
 const Input = props => {
-    const { placeholder, reff } = props;
+    const { placeholder, reff, maxLength } = props;
     const styles = StyleSheet.create({
         container: {
             display: 'flex',
@@ -45,7 +45,7 @@ const Input = props => {
             <View style={styles.verticalLine} />
             <View style={styles.horizontalLines} >
                 <TextInput
-                    maxLength={15}
+                    maxLength={maxLength}
                     placeholderTextColor={theme.colors.grey} 
                     ref={reff}
                     {...props}

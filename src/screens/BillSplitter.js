@@ -75,6 +75,7 @@ const BillSplitter = ({ navigation }) => {
                         value={contributor.name}
                         placeholder={"Nombre"}
                         onChangeText={addName}
+                        maxLength={15}
                     />
 
                     <Input
@@ -83,6 +84,7 @@ const BillSplitter = ({ navigation }) => {
                         value={contributor.amount}
                         placeholder={"Monto"}
                         onChangeText={addAmount}
+                        maxLength={9}
                     />
                 </View>
                 <View style={styles.contributorInfoContainer}>

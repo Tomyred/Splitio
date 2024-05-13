@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack';
 import BillSplitter from '../screens/BillSplitter';
 import Balance from '../screens/Balance';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
   return (

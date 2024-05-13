@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { color as c, fontSize as f } from "../utils/utils";
 
