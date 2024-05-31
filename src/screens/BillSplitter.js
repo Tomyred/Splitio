@@ -9,26 +9,31 @@ import { theme } from "../styles/theme";
 const BillSplitter = ({ navigation }) => {
     const contributorDefault = { name: "", amount: "" };
     const [contributor, setContributor] = useState(contributorDefault);
-    const [contributors, setContributors] = useState([]);
+    const [contributors, setContributors] = useState({});
     const [totalAmount, setTotalAmount] = useState(0);
     const inputRef = useRef(null);
 
     const addContributor = () => {
 
-        const contributorAux = {
-            ...contributor,
-            amount: parseFloat(contributor.amount).toFixed(2)
-        }        
+        const parsedAmount = parseFloat(contributor.amount).toFixed(2)
+        
+        if(contributors[contributor.name]){
 
-        setContributors([contributorAux, ...contributors]);
-        setContributor(contributorDefault);
+            setContributors( {...contributors, [contributor.name]: [ ...contributors[contributor.name], parsedAmount] } );
+            setContributor(contributorDefault);
+        }else{
+            setContributors( {...contributors, [contributor.name]: [ parsedAmount ] } );
+            setContributor(contributorDefault);
+        }
+
         inputRef.current.focus();
     };
 
-    const removeContributor = (contributor) => {
-        const filteredArray = contributors.filter((cont) => cont.name !== contributor.name);
-        setContributors(filteredArray);
-        inputRef.current.focus();
+    const removeContributor = (contributor, value) => {
+
+        const newValues = contributors[contributor].filter( val => val !== value )
+
+        setContributors({ ...contributors, [contributor]: newValues })
     };
 
     const addName = (value) => {
@@ -46,25 +51,41 @@ const BillSplitter = ({ navigation }) => {
     }
 
     const calculate = () => {
-        const eachMustPay = parseFloat(totalAmount / contributors.length).toFixed(2);
-        const debts = contributors.map((con) => ({
+
+        const contribArray = []
+
+        Object.keys(contributors).forEach( cont => {
+
+            if(contributors[cont].length > 0){
+                contribArray.push(
+                    {
+                        name: cont,
+                        amount: contributors[cont].reduce((ac, val) => ac + parseFloat(val), 0).toFixed(2)
+                    }
+                )
+            }
+        } )
+
+        const eachMustPay = parseFloat(totalAmount / contribArray.length).toFixed(2);
+        const debts = contribArray.map((con) => ({
             name: con.name,
             debt: parseFloat(con.amount).toFixed(2) - eachMustPay,
         }));
         const payers = debts.filter((debt) => debt.debt < 0);
         const receivers = debts.filter((debt) => debt.debt > 0);
-        const notPaynotReceive = debts.filter((debt) => debt === 0);
 
         navigation.navigate("Balance", { eachMustPay, receivers, payers, totalAmount });
     };
 
     useEffect(() => {
         let total = 0;
-        contributors.forEach((cont) => {
-            total += Number(cont.amount);
+        Object.keys(contributors).forEach((cont) => {
+            contributors[cont].forEach( val => {    
+                total += Number(val);
+            } )
         });
         setTotalAmount(total.toFixed(2));
-    }, [contributors.length]);
+    }, [contributors]);
 
     return (
         <SafeAreaView style={{ flex: 1, padding: 30, justifyContent: "space-between", backgroundColor: theme.colors.background }}>
@@ -90,23 +111,40 @@ const BillSplitter = ({ navigation }) => {
                 <View style={styles.contributorInfoContainer}>
                     <View style={styles.whiteLine} />
                     <ScrollView style={styles.contributorInfoScroll}>
-                        {contributors.map((cont, i) => {
-                            return (
-                                <View key={i} style={styles.contributorInfo}>
-                                    <Text textStyle={'white'} fontSize={"md"} value={cont.name} />
-                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                        <Text textStyle={'white'} fontSize={"md"} value={"$" + cont.amount} />
-                                        <IconButton
-                                            onPress={() => removeContributor(cont)}
-                                            style={{ marginLeft: 8 }}
-                                            iconName='trash'
-                                            color='error'
-                                            fontSize='bg'
-                                        />
+                        {Object.keys(contributors).map((cont, i) => {
+                            let total = 0;
+                            if(contributors[cont].length > 0){
+                                return (
+                                    <View key={i} style={styles.contributorInfo}>
+                                        <View style={{width: '100%' }} >
+                                            <Text textStyle={'white'} fontSize={"md"} value={cont} />
+                                        </View>
+                                        <View style={{ flexDirection: "column" }} >
+                                            {contributors[cont].map( value => {
+                                                total += Number(value)
+                                                return (
+                                                    <View style={{ flexDirection: "row", marginTop: 5, justifyContent: "space-between" }}>
+                                                        <Text textStyle={'white'} fontSize={"md"} value={"- $" + value} />
+                                                        <IconButton
+                                                            onPress={() => removeContributor(cont, value)}
+                                                            style={{ marginLeft: 8 }}
+                                                            iconName='trash'
+                                                            color='error'
+                                                            fontSize='bg'
+                                                        />
+                                                    </View>
+                                                )
+                                            } )  }
+                                        </View>
                                     </View>
-                                </View>
-                            );
+                                );
+                            }
+
+                            return <></>
                         })}
+                        <View style={{height: 20}} >
+
+                        </View>
                     </ScrollView>
                     <View style={styles.whiteLine} />
                 </View>
@@ -122,7 +160,7 @@ const BillSplitter = ({ navigation }) => {
                                 type={"error"}
                                 fontSize={"bg"}
                                 title='Limpiar'
-                                onPress={() => setContributors([])}
+                                onPress={() => setContributors({})}
                             />
                         </View>
                         <View style={{ width: "40%", alignSelf: "center" }}>
@@ -141,7 +179,7 @@ const BillSplitter = ({ navigation }) => {
                                 onPress={calculate}
                                 type={"alert"}
                                 fontSize={"bg"}
-                                disabled={contributors.length < 2}
+                                disabled={Object.keys(contributors).length < 2}
                                 title='Calcular'
                             />
                         </View>
@@ -157,9 +195,8 @@ export default BillSplitter;
 const styles = StyleSheet.create({
     contributorInfoContainer: {
         flexDirection: 'row',
+        alignItems: 'center',
         flex: 1,
-        alignItems: 'center'
-        
     },
     contributorInfoScroll: {
         backgroundColor: '#000000',
@@ -169,7 +206,8 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         height: '100%',
         width: '100%',
-        paddingVertical: 15
+        paddingTop: 15,
+        // marginBottom: 30
     },
     buttonContainer: {
         flexDirection: "row",
@@ -178,7 +216,7 @@ const styles = StyleSheet.create({
     },
     contributorInfo: {
         paddingHorizontal: 10,
-        flexDirection: "row",
+        flexDirection: "column",
         justifyContent: "space-between",
         marginBottom: 10,
     },
