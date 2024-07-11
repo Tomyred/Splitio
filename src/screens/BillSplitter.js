@@ -17,12 +17,12 @@ const BillSplitter = ({ navigation }) => {
 
         const parsedAmount = parseFloat(contributor.amount).toFixed(2)
         
-        if(contributors[contributor.name]){
+        if(contributors[contributor.name.trim()]){
 
-            setContributors( {...contributors, [contributor.name]: [ ...contributors[contributor.name], parsedAmount] } );
+            setContributors( {...contributors, [contributor.name.trim()]: [ ...contributors[contributor.name.trim()], parsedAmount] } );
             setContributor(contributorDefault);
         }else{
-            setContributors( {...contributors, [contributor.name]: [ parsedAmount ] } );
+            setContributors( {...contributors, [contributor.name.trim()]: [ parsedAmount ] } );
             setContributor(contributorDefault);
         }
 
@@ -120,10 +120,10 @@ const BillSplitter = ({ navigation }) => {
                                             <Text textStyle={'white'} fontSize={"md"} value={cont} />
                                         </View>
                                         <View style={{ flexDirection: "column" }} >
-                                            {contributors[cont].map( value => {
+                                            {contributors[cont].map( (value, j) => {
                                                 total += Number(value)
                                                 return (
-                                                    <View style={{ flexDirection: "row", marginTop: 5, justifyContent: "space-between" }}>
+                                                    <View key={j} style={{ flexDirection: "row", marginTop: 5, justifyContent: "space-between" }}>
                                                         <Text textStyle={'white'} fontSize={"md"} value={"- $" + value} />
                                                         <IconButton
                                                             onPress={() => removeContributor(cont, value)}
